@@ -2,6 +2,7 @@ import React from 'react';
 import MenuSection from './components/MenuSection';
 import OrderForm from './components/OrderForm';
 import styles from './App.module.css';
+import logo from './assets/images/Logo-Pizza.png';
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <header className={styles.header}>
         <img
           className={styles.logo}
-          src="/Images/Logo-Pizza.png"
+          src={logo}
           alt="Al Gabbiano Pizza Logo"
         />
         <h1 className={styles.siteTitle}>Al Gabbiano Pizza</h1>
