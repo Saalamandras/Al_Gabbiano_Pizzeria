@@ -1,34 +1,27 @@
 import React, { useState } from 'react';
 import { menuItems, addOns, sizeMultipliers } from '../data/menuData';
+import styles from './OrderForm.module.css';
 
 function OrderForm() {
-  // Quantities keyed by pizza id, default 0
   const [quantities, setQuantities] = useState(
     Object.fromEntries(menuItems.map(item => [item.id, 0]))
   );
-
-  // Selected add-ons as a Set of ids
   const [selectedAddOns, setSelectedAddOns] = useState(new Set());
-
   const [size, setSize] = useState('regular');
   const [specialRequests, setSpecialRequests] = useState('');
 
-  // --- Derived total ---
-  const pizzaTotal = menuItems.reduce((sum, item) => {
-    return sum + item.price * (quantities[item.id] || 0);
-  }, 0);
-
-  const addOnTotal = addOns.reduce((sum, addon) => {
-    return sum + (selectedAddOns.has(addon.id) ? addon.price : 0);
-  }, 0);
-
-  // Size multiplier only applies to pizzas, not add-ons
+  const pizzaTotal = menuItems.reduce(
+    (sum, item) => sum + item.price * (quantities[item.id] || 0),
+    0
+  );
+  const addOnTotal = addOns.reduce(
+    (sum, addon) => sum + (selectedAddOns.has(addon.id) ? addon.price : 0),
+    0
+  );
   const total = pizzaTotal * sizeMultipliers[size] + addOnTotal;
 
-  // --- Handlers ---
   function handleQuantityChange(id, value) {
-    const qty = Math.max(0, parseInt(value) || 0);
-    setQuantities(prev => ({ ...prev, [id]: qty }));
+    setQuantities(prev => ({ ...prev, [id]: Math.max(0, parseInt(value) || 0) }));
   }
 
   function handleAddOnChange(id, checked) {
@@ -41,7 +34,6 @@ function OrderForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     const order = {
       items: menuItems
         .filter(item => quantities[item.id] > 0)
@@ -51,20 +43,19 @@ function OrderForm() {
       specialRequests,
       total: total.toFixed(2),
     };
-
     console.log('Order submitted:', order);
     alert(`Order placed! Total: $${order.total}`);
   }
 
   return (
-    <section id="order-form">
-      <h2>Place Your Order</h2>
-      <form onSubmit={handleSubmit}>
+    <section id="order-form" className={styles.section}>
+      <h2 className={styles.heading}>Place Your Order</h2>
+      <form className={styles.form} onSubmit={handleSubmit}>
 
         {menuItems.map(item => (
-          <div key={item.id}>
+          <div key={item.id} className={styles.row}>
             <label htmlFor={`${item.id}-quantity`}>
-              {item.name} (${item.price.toFixed(2)}):
+              {item.name} — <span style={{ color: '#e74c3c' }}>${item.price.toFixed(2)}</span>
             </label>
             <input
               type="number"
@@ -76,13 +67,12 @@ function OrderForm() {
           </div>
         ))}
 
-        <fieldset>
-          <legend>Add-ons:</legend>
+        <fieldset className={styles.fieldset}>
+          <legend>Add-ons</legend>
           {addOns.map(addon => (
-            <label key={addon.id}>
+            <label key={addon.id} className={styles.checkboxLabel}>
               <input
                 type="checkbox"
-                value={addon.id}
                 checked={selectedAddOns.has(addon.id)}
                 onChange={e => handleAddOnChange(addon.id, e.target.checked)}
               />
@@ -91,9 +81,9 @@ function OrderForm() {
           ))}
         </fieldset>
 
-        <fieldset>
-          <legend>Size:</legend>
-          <label>
+        <fieldset className={styles.fieldset}>
+          <legend>Size</legend>
+          <label className={styles.radioLabel}>
             <input
               type="radio"
               name="size"
@@ -103,7 +93,7 @@ function OrderForm() {
             />
             Regular
           </label>
-          <label>
+          <label className={styles.radioLabel}>
             <input
               type="radio"
               name="size"
@@ -115,17 +105,24 @@ function OrderForm() {
           </label>
         </fieldset>
 
-        <label htmlFor="special-requests">Special Requests:</label>
+        <label htmlFor="special-requests" className={styles.textareaLabel}>
+          Special Requests:
+        </label>
         <textarea
           id="special-requests"
           rows="4"
+          className={styles.textarea}
           value={specialRequests}
           onChange={e => setSpecialRequests(e.target.value)}
         />
 
-        <p>Total: <strong>${total.toFixed(2)}</strong></p>
+        <p className={styles.total}>
+          Total: <strong>${total.toFixed(2)}</strong>
+        </p>
 
-        <button type="submit">Go To Checkout</button>
+        <button type="submit" className={styles.submitBtn}>
+          Go To Checkout
+        </button>
       </form>
     </section>
   );
