@@ -1,0 +1,25 @@
+.section {
+  margin-bottom: 4rem;
+}
+
+.heading {
+  font-size: 2rem;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.heading::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: #e74c3c;
+  margin: 10px auto 0;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+}
