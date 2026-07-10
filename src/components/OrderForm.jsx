@@ -67,6 +67,8 @@ function OrderForm() {
           </div>
         ))}
 
+        <div className={styles.divider} />
+
         <fieldset className={styles.fieldset}>
           <legend>Add-ons</legend>
           {addOns.map(addon => (

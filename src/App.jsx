@@ -6,17 +6,13 @@ import logo from './assets/images/Logo-Pizza.png';
 
 function App() {
   return (
-    <div>
+    <div className={styles.wrapper}>
       <header className={styles.header}>
-        <img
-          className={styles.logo}
-          src={logo}
-          alt="Al Gabbiano Pizza Logo"
-        />
+        <img className={styles.logo} src={logo} alt="Al Gabbiano Pizza Logo" />
         <h1 className={styles.siteTitle}>Al Gabbiano Pizza</h1>
         <nav className={styles.nav}>
-          <a href="#menu">Menu</a>
-          <a href="#order-form">Order</a>
+          <a href="#menu" className={styles.navLink}>Menu</a>
+          <a href="#order-form" className={styles.navLinkAccent}>Order</a>
         </nav>
       </header>
 

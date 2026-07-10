@@ -1,25 +1,18 @@
 .section {
-  margin-bottom: 4rem;
+  margin-bottom: 72px;
 }
 
 .heading {
-  font-size: 2rem;
-  color: #2c3e50;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 34px;
+  color: #f6f1e4;
   text-align: center;
-  margin-bottom: 2rem;
-  position: relative;
-}
-
-.heading::after {
-  content: '';
-  display: block;
-  width: 50px;
-  height: 3px;
-  background-color: #e74c3c;
-  margin: 10px auto 0;
+  margin-bottom: 32px;
 }
 
 .grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
 }
